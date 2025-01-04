@@ -1,0 +1,501 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url('img/2.jpg');
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 80%;
+}
+
+.box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+.value {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.label {
+    color: #555;
+}
+
+.icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.switch-container {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.switch-container div {
+    margin: 0 10px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Updated styles for the .buttons-container to center and add space between buttons */
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+    gap: 10px; /* Add some space between buttons */
+    margin-top: 20px;
+}
+
+/* Updated styles for the checkboxes and their labels in the buttons-container */
+.buttons-container input[type="checkbox"] {
+    margin: 0; /* Remove margin to ensure consistent spacing */
+    padding: 10px;
+    border: 2px solid; /* Add a border to enhance visibility */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Updated styles for the labels to position them closer to the checkboxes */
+.buttons-container label {
+    margin: 0; /* Remove margin to ensure consistent spacing */
+    display: flex;
+    align-items: center; /* Align items vertically */
+}
+
+/* Additional styles to ensure responsiveness on small screens */
+@media (max-width: 768px) {
+    .buttons-container {
+        flex-direction: column; /* Stack buttons vertically on small screens */
+        align-items: center; /* Center items horizontally on small screens */
+    }
+
+    .buttons-container label {
+        width: 100%; /* Make labels full width on small screens */
+        box-sizing: border-box; /* Include padding and border in width calculation */
+    }
+}
+
+
+
+.button {
+    margin: 0 10px;
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.actuators-automatic-container {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.actuators-automatic-container div {
+    margin: 0 10px;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.popup-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+button {
+    background: #4caf50;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.actuator-box {
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.box-label {
+    text-align: center;
+}
+
+.actuator-box:hover {
+    background-color: darkred;
+}
+
+
+
+/* Additional styles for the switch-container to position the switch next to the title */
+.switch-container {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    justify-content: center; /* Align items horizontally */
+    margin-top: 20px;
+    text-align: left; /* Set text alignment to the left */
+    font-size: 18px;
+  }
+  
+  /* Re-position the switch to appear next to the title */
+  .switch-container h1 {
+    margin-right: 10px; /* Add some space to the right of the title */
+  }
+  
+  /* Style for the checkboxes in the buttons container */
+  .buttons input[type="checkbox"] {
+    margin: 0 10px; /* Add space around the checkboxes */
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+/* Updated styles for actuators-automatic-container for inline display */
+.actuators-automatic-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center; /* Centers the content horizontally */
+    margin-top: 20px;
+    text-align: left; /* Set text alignment to the left */
+    font-size: 18px;
+}
+
+/* Re-position the automatic switch to appear next to the title */
+.actuators-automatic-container h1 {
+    margin-right: 10px; /* Add some space to the right of the title */
+}
+
+/* Style adjustments for the checkboxes and their labels in the buttons-container */
+.buttons-container {
+    display: flex;
+    align-items: center; /* Centers the checkboxes and their labels vertically */
+    margin-top: 20px;
+    font-size: 18px;
+  }
+  
+  /* Style each checkbox to improve visibility and interaction */
+  .buttons-container input[type="checkbox"] {
+    margin-right: 5px; /* Adjust the spacing between the checkbox and its label*/
+    padding: 5px;
+    border: 2px solid ; /* Add a border to enhance visibility */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  /* Additional adjustments for the labels to position them closer to the checkboxes */
+  .buttons-container label {
+    margin-right: 10px; /* Adjust the spacing between the labels and the checkboxes */
+  }
+  #wateringTime {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+}
+
+.watering-time-header {
+    text-align: center;
+}
+
+#wateringTimesContainer {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 10px;
+}
+
+.watering-time-box {
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.watering-time-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.edit-btn, .delete-btn {
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+#addButton {
+    display: block;
+    margin: 10px auto;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#wateringTimePopup {
+    display: none;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+.watering-time-box {
+    padding: 10px;
+    background-color: #e5ffe5; /* Light green color */
+    border-radius: 4px;
+    margin-bottom: 10px; /* Add some margin between time boxes */
+    overflow: hidden; /* Hide overflow content */
+  }
+.fertilizing-time-box {
+    padding: 10px;
+    background-color: #e5ffe5; /* Light green background color */
+    border-radius: 4px;
+    margin-bottom: 10px; /* Add some margin between time boxes */
+    overflow: hidden; /* Hide overflow content */
+}
+#fertilizingTime {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.fertilizing-time-header {
+    text-align: center;
+}
+
+#fertilizingTimesDisplay {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 10px;
+}
+
+.fertilizing-time-box {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.fertilizing-time-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.edit-btn, .delete-btn {
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+#addButton {
+    display: block;
+    margin: 10px auto;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#fertilizingTimePopup {
+    display: none;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.fertilizing-time-box {
+    padding: 10px;
+    background-color: #e5ffe5; /* Light green color */
+    border-radius: 4px;
+    margin-bottom: 10px; /* Add some margin between time boxes */
+    overflow: hidden; /* Hide overflow content */
+}
+.time-row {
+    margin-bottom: 5px;
+}
+.btn-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.btn-row button {
+    width: 48%; /* Equal width for the buttons and allow some space between them */
+}
+.fa-pencil-alt {
+    color: blue;
+    /* Additional styling if needed */
+}
+.fa-trash-alt {
+    color: red;
+    /* Additional styling if needed */
+}
+.logcontainer {
+    text-align: center;
+}
+
+#logHistoryBtn {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+.container1 {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 80%;
+}

@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- Flatpickr JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="styles.css">
+    <title>Smart Terrarium</title>
+</head>
+<body>
+    <div class="container1">
+    <div class="container">
+        <h2>Sensor Readings</h2>
+        <div class="box">
+            <div class="item">
+                <div class="icon"><i class="fas fa-sun"></i></div>
+                <div class="value" id="lightIntensity">-- Lux</div>
+                <div class="label">Light</div>
+            </div>
+            <div class="item">
+                <div class="icon"><i class="fas fa-tint"></i></div>
+                <div class="value" id="humidity">-- %</div>
+                <div class="label">Humidity</div>
+            </div>
+            <div class="item">
+                <div class="icon"><i class="fas fa-tint"></i></div>
+                <div class="value" id="moisture">-- %</div>
+                <div class="label">Moisture</div>
+            </div>
+            <div class="item">
+                <div class="icon"><i class="fas fa-thermometer-half"></i></div>
+                <div class="value" id="temperature">-- °C</div>
+                <div class="label">Temperature</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Threshold</h2>
+        <div class="box">
+            <div class="item">
+                <div class="icon" onclick="showPopup('light')"><i class="fas fa-sun"></i></div>
+                <div class="value" id="lightThreshold">-- Lux</div>
+                <div class="label">Light</div>
+            </div>
+            <div class="item">
+                <div class="icon" onclick="showPopup('humidity')"><i class="fas fa-tint"></i></div>
+                <div class="value" id="humidityThreshold">-- %</div>
+                <div class="label">Humidity</div>
+            </div>
+            <div class="item">
+                <div class="icon" onclick="showPopup('moisture')"><i class="fas fa-tint"></i></div>
+                <div class="value" id="moistureThreshold">-- %</div>
+                <div class="label">Moisture</div>
+            </div>
+            <div class="item">
+                <div class="icon" onclick="showPopup('temperature')"><i class="fas fa-thermometer-half"></i></div>
+                <div class="value" id="temperatureThreshold">-- °C</div>
+                <div class="label">Temperature</div>
+            </div>
+        </div>
+    </div>
+    <div class="popup" id="lightPopup">
+        <div class="popup-content">
+          <span class="close" onclick="closePopup('light')">&times;</span>
+          <h3>Set Light Threshold</h3>
+          <input type="number" id="lightInput" placeholder="Enter Lux value">
+          <button onclick="updateThreshold('light')">Update</button>
+        </div>
+      </div>
+      
+      
+      <div class="popup" id="humidityPopup">
+        <div class="popup-content">
+          <span class="close" onclick="closePopup('humidity')">&times;</span>
+          <h3>Set Humidity Threshold</h3>
+          <input type="number" id="humidityInput" placeholder="Enter % value">
+          <button onclick="updateThreshold('humidity')">Update</button>
+        </div>
+      </div>
+      
+      <div class="popup" id="moisturePopup">
+        <div class="popup-content">
+          <span class="close" onclick="closePopup('moisture')">&times;</span>
+          <h3>Set Moisture Threshold</h3>
+          <input type="number" id="moistureInput" placeholder="Enter % value">
+          <button onclick="updateThreshold('moisture')">Update</button>
+        </div>
+      </div>
+      
+      <div class="popup" id="temperaturePopup">
+        <div class="popup-content">
+          <span class="close" onclick="closePopup('temperature')">&times;</span>
+          <h3>Set Temperature Threshold</h3>
+          <input type="number" id="temperatureInput" placeholder="Enter °C value">
+          <button onclick="updateThreshold('temperature')">Update</button>
+        </div>
+      </div>
+      <div class="actuators-manual-container">
+      <div class="switch-container">
+        <h1>Actuators Manual</h1>
+        <div>Off</div>
+        <label class="switch">
+            <input type="checkbox" id="manualSwitch" onclick="toggleManualMode()">
+            <span class="slider round"></span>
+        </label>
+        <div>On</div>
+    </div>
+    
+    <div class="buttons-container">
+        <label class="container">Fan
+            <input type="checkbox" id="fan" onclick="toggleActuator('fan')" disabled>
+            <span class="checkmark"></span>
+        </label>
+        <label class="container">Light
+            <input type="checkbox" id="light" onclick="toggleActuator('light')" disabled>
+            <span class="checkmark"></span>
+        </label>
+        <label class="container">Pump
+            <input type="checkbox" id="pump" onclick="toggleActuator('pump')" disabled>
+            <span class="checkmark"></span>
+        </label>
+        <label class="container">Sprinklers
+            <input type="checkbox" id="sprinkler" onclick="toggleActuator('sprinkler')" disabled>
+            <span class="checkmark"></span>
+        </label>
+    </div>
+    
+    </div>
+    
+    <div class="actuators-automatic-container">
+        <h1>Actuators Automatic</h1>
+        <div>Off</div>
+        <label class="switch">
+            <input type="checkbox" id="automaticSwitch" onclick="toggleAutomaticMode()">
+            <span class="slider round"></span>
+        </label>
+        <div>On</div>
+    </div>
+    <div id="wateringTime">
+        
+        <h2 class="watering-time-header">Watering Time Settings</h2>
+    <!-- Container for displaying watering times -->
+    <div id="wateringTimesDisplay"></div>
+<br>
+    <!-- Button to show the watering time popup -->
+    <button onclick="showWateringTimePopup()">Add Watering Time</button>
+
+    <!-- Your watering time popup (as per your existing structure) -->
+    <div id="wateringTimePopup" style="display: none;">
+        <!-- ... your existing watering time popup content ... -->
+        <label for="startTime">Start Time:</label>
+        <input type="text" id="startTime" placeholder="Select Start Time" data-input>
+        
+        <label for="endTime">End Time:</label>
+        <input type="text" id="endTime" placeholder="Select End Time" data-input>
+        
+        <button id="saveButton" onclick="saveWateringTime()">Save</button>
+    </div>
+    </div>
+    <div id="fertilizingTime">
+        <h2 class="fertilizing-time-header">Fertilizing Time Settings</h2>
+    <!-- Container for displaying fertilizing times -->
+<div id="fertilizingTimesDisplay"></div>
+<br>
+<!-- Button to show the fertilizing time popup -->
+<button onclick="showFertilizingTimePopup()">Add Fertilizing Time</button>
+
+<!-- Your fertilizing time popup -->
+<div id="fertilizingTimePopup" style="display: none;">
+    <label for="fertilizingStartTime">Start Time:</label>
+    <input type="text" id="fertilizingStartTime" placeholder="Select Start Time" data-input>
+    
+    <label for="fertilizingEndTime">End Time:</label>
+    <input type="text" id="fertilizingEndTime" placeholder="Select End Time" data-input>
+    
+    <button onclick="saveFertilizingTime()">Save</button>
+</div>
+</div>
+<div class="logcontainer">
+    <button id="logHistoryBtn"><a href="loghistory.html">History</a></button>
+</div>
+</div>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-analytics.js";
+        import { getDatabase, ref, onValue, update, push, remove  } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyBvzIhpObzeivd6GfbcADybGmVgnYWSfWE",
+          authDomain: "smart-terrarium-d36cf.firebaseapp.com",
+          projectId: "smart-terrarium-d36cf",
+          storageBucket: "smart-terrarium-d36cf.appspot.com",
+          messagingSenderId: "699787097592",
+          appId: "1:699787097592:web:6131602462ce52e220520d",
+          measurementId: "G-YTLXN77NWJ"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        // Reference to the database using the initialized app
+        const database = getDatabase(app);
+
+        // Reference to the sensors data under Device02
+        const sensorsRef = ref(database, 'Device02/sensors');
+
+        // Update sensor readings on value changes
+        onValue(sensorsRef, (snapshot) => {
+        const data = snapshot.val();
+
+        // Check if properties exist before accessing their values
+        if (data && 'light_intensity' in data) {
+            // Update Light Intensity
+            document.getElementById('lightIntensity').innerText = data.light_intensity + ' Lux';
+        }
+
+        if (data && 'humidity' in data) {
+            // Update Humidity
+            document.getElementById('humidity').innerText = data.humidity + ' %';
+        }
+
+        if (data && 'moisture' in data) {
+            // Update Moisture
+            document.getElementById('moisture').innerText = data.moisture + ' %';
+        }
+
+        if (data && 'temperature' in data) {
+            // Update Temperature
+            document.getElementById('temperature').innerText = data.temperature + ' °C';
+        }
+        });
+                // Reference to the thresholds data under Device02
+        const thresholdsRef = ref(database, 'Device02/thresholds');
+
+        // Update threshold values on value changes
+        onValue(thresholdsRef, (snapshot) => {
+        const data = snapshot.val();
+
+        // Check if properties exist before accessing their values
+        if (data && 'lightIntensity_thresholds' in data) {
+            // Update Light Threshold
+            document.getElementById('lightThreshold').innerText = data.lightIntensity_thresholds + ' Lux';
+        }
+
+        if (data && 'humidity_thresholds' in data) {
+            // Update Humidity Threshold
+            document.getElementById('humidityThreshold').innerText = data.humidity_thresholds + ' %';
+        }
+
+        if (data && 'moisture_thresholds' in data) {
+            // Update Moisture Threshold
+            document.getElementById('moistureThreshold').innerText = data.moisture_thresholds + ' %';
+        }
+
+        if (data && 'temperature_thresholds' in data) {
+            // Update Temperature Threshold
+            document.getElementById('temperatureThreshold').innerText = data.temperature_thresholds + ' °C';
+        }
+        });
+        
+        function showPopup(sensorType) {
+    const popup = document.getElementById(`${sensorType}Popup`);
+    popup.style.display = 'block';
+  }
+
+  function closePopup(sensorType) {
+    const popup = document.getElementById(`${sensorType}Popup`);
+    popup.style.display = 'none';
+  }
+
+  function updateThreshold(sensorType) {
+  console.log('Updating threshold:', sensorType);
+  const newValue = document.getElementById(`${sensorType}Input`).value;
+  console.log('New value:', newValue);
+  const thresholdsRef = ref(database, 'Device02/thresholds');
+
+  // Use the correct key based on the sensorType
+  const thresholdKey = `${sensorType}_thresholds`;
+
+  // Log values for debugging
+  console.log(`Updating ${thresholdKey} to: ${newValue}`);
+
+  // Update the threshold value in the Firebase Realtime Database
+  update(thresholdsRef, { [thresholdKey]: newValue })
+    .then(() => {
+      console.log('Update successful');
+    })
+    .catch((error) => {
+      console.error('Error updating threshold:', error.message);
+    });
+
+  // Close the popup after updating
+  closePopup(sensorType);
+}
+function toggleManualMode() {
+        const manualSwitch = document.getElementById('manualSwitch');
+        const manualMode = manualSwitch.checked ? 1 : 0;
+
+        // Enable or disable checkboxes based on the manual mode
+        const checkboxes = document.querySelectorAll('.buttons-container input[type="checkbox"]');
+        checkboxes.forEach((checkbox) => {
+            checkbox.disabled = !manualMode;
+
+            // Clear the checked state when manual mode is turned off
+            if (!manualMode) {
+                checkbox.checked = false;
+            }
+        });
+
+        const modeRef = ref(database, 'Device02/mode');
+        update(modeRef, { 'manual': manualMode });
+
+        // Log the action to the history
+        const historyRef = ref(database, 'Device02/history');
+        const action = manualMode ? 'Manual Mode On' : 'Manual Mode Off';
+        const timestamp = new Date().getTime();
+        push(historyRef, { 'action': action, 'date': getCurrentDate(), 'time': timestamp });
+    }
+
+    window.toggleActuator = function (actuator) {
+    const actuatorsManualRef = ref(database, 'Device02/actuators-manual');
+
+    // Check if the manual mode is on
+    const manualSwitch = document.getElementById('manualSwitch');
+    const manualMode = manualSwitch.checked;
+
+    // Get the current state of manual actuators
+    const actuatorsManualState = {
+        'fan': document.getElementById('fan').checked ? 1 : 0,
+        'light': document.getElementById('light').checked ? 1 : 0,
+        'pump': document.getElementById('pump').checked ? 1 : 0,
+        'sprinkler': document.getElementById('sprinkler').checked ? 1 : 0
+    };
+
+    /// If manual mode is on, accumulate the clicked actuators to 1
+    if (manualMode) {
+        // Set the state of the clicked actuator to 1, without affecting others
+        actuatorsManualState[actuator] = 1;
+
+        // Log the action to the history
+        const historyRef = ref(database, 'Device02/history');
+        const action = `${actuator} turned On manually`;
+        const timestamp = new Date().getTime();
+        push(historyRef, { 'action': action, 'date': getCurrentDate(), 'time': timestamp });
+    } else {
+        // If manual mode is off, set all manual actuators to 0
+        update(actuatorsManualRef, { 'fan': 0, 'light': 0, 'pump': 0, 'sprinkler': 0 });
+        return;  // Exit the function to prevent unnecessary updates
+    }
+
+    // Update the state of manual actuators
+    update(actuatorsManualRef, Object.assign({}, actuatorsManualState));
+}
+
+
+
+
+    function getCurrentDate() {
+        const today = new Date();
+        const date = today.getDate() + ' ' + (today.toLocaleString('default', { month: 'long' })) + ' ' + today.getFullYear();
+        return date;
+    }
+    function toggleAutomaticMode() {
+        const automaticSwitch = document.getElementById('automaticSwitch');
+        const manualSwitch = document.getElementById('manualSwitch');
+        const checkboxes = document.querySelectorAll('.buttons-container input[type="checkbox"]');
+
+        if (automaticSwitch.checked) {
+            // Disable manual switch and checkboxes when automatic mode is turned on
+            manualSwitch.disabled = true;
+            checkboxes.forEach((checkbox) => {
+                checkbox.disabled = true;
+            });
+        } else {
+            // Enable manual switch and checkboxes when automatic mode is turned off
+            manualSwitch.disabled = false;
+            checkboxes.forEach((checkbox) => {
+                checkbox.disabled = false;
+            });
+        }
+    }
+    function showWateringTimePopup() {
+        const popup = document.getElementById('wateringTimePopup');
+        popup.style.display = 'block';
+    }
+    flatpickr("#startTime", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+    });
+
+    flatpickr("#endTime", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+    });
+    // Function to fetch and display all watering times
+    function displayWateringTimes() {
+    const wateringTimeRef = ref(database, 'Device02/control/watering_time');
+
+    // Listen for changes in the watering_time node
+    onValue(wateringTimeRef, (snapshot) => {
+        const wateringTimesData = snapshot.val();
+
+        // Clear the existing content in the display container
+        const displayContainer = document.getElementById('wateringTimesDisplay');
+        displayContainer.innerHTML = '';
+
+        // Check if there are watering times in the database
+        if (wateringTimesData) {
+            // Loop through each watering time and create HTML elements
+            Object.keys(wateringTimesData).forEach((key) => {
+                const startTime = wateringTimesData[key].start_time;
+                const endTime = wateringTimesData[key].end_time;
+
+                const timeBox = document.createElement('div');
+                timeBox.className = 'watering-time-box'; // Apply styling for the time box
+                timeBox.innerHTML = `<div class="time-row"><strong>Start Time:</strong> ${startTime}</div><div class="time-row"><strong>End Time:</strong> ${endTime}</div><div class="btn-row"><button onclick="editWateringTime('${key}')"><i class="fas fa-pencil-alt"></i> Edit</button> <button onclick="deleteWateringTime('${key}')"><i class="fas fa-trash-alt"></i> Delete</button></div>`;
+                displayContainer.appendChild(timeBox);
+            });
+
+            // Enable scrollbar functionality for the watering time settings box
+            displayContainer.style.maxHeight = '60vh'; // Set maximum height
+            displayContainer.style.overflowY = 'auto'; // Enable vertical scrollbar
+        } else {
+            // Display a message if there are no watering times
+            const noDataMessage = document.createElement('div');
+            noDataMessage.textContent = 'No watering times available.';
+            displayContainer.appendChild(noDataMessage);
+        }
+    });
+}
+
+// Call the displayWateringTimes function to initially load the data
+displayWateringTimes();
+
+    function saveWateringTime() {
+        const startTime = document.getElementById('startTime').value;
+        const endTime = document.getElementById('endTime').value;
+
+        // Get a reference to the "watering_time" node in the database
+    const wateringTimeRef = ref(database, 'Device02/control/watering_time');
+
+        // Push a new watering time to the database
+        const newWateringTimeRef = push(wateringTimeRef, {
+            start_time: startTime,
+            end_time: endTime
+        });
+
+        // For demonstration purposes, display the saved data in a box
+        const displayContainer = document.getElementById('wateringTimesDisplay');
+        const timeBox = document.createElement('div');
+        timeBox.innerHTML = `Start Time: ${startTime}, End Time: ${endTime} <button onclick="editWateringTime()">Edit</button> <button onclick="deleteWateringTime()">Delete</button>`;
+        displayContainer.appendChild(timeBox);
+
+        // Clear the input fields and hide the popup
+        document.getElementById('startTime').value = '';
+        document.getElementById('endTime').value = '';
+        document.getElementById('wateringTimePopup').style.display = 'none';
+    }
+
+    function editWateringTime(wateringTimeKey) {
+    // Prompt the user for new start and end times (you can use a modal or another UI)
+    const newStartTime = prompt("Enter new start time:");
+    const newEndTime = prompt("Enter new end time:");
+
+    // Ensure the user entered values
+    if (newStartTime !== null && newEndTime !== null) {
+        // Get a reference to the specific watering time node in the database
+        const wateringTimeRef = ref(database, `Device02/control/watering_time/${wateringTimeKey}`);
+
+        // Update the values of the watering time
+        update(wateringTimeRef, {
+            start_time: newStartTime,
+            end_time: newEndTime
+        });
+
+        // Reload or update the UI to reflect the changes (optional)
+        // You can update the displayed information in the UI as per your application's needs.
+        // For example, you may want to re-render the list of watering times.
+
+        // For demonstration purposes, you can log a message
+        console.log(`Watering time ${wateringTimeKey} updated successfully.`);
+    } else {
+        // Handle the case where the user canceled the operation or provided invalid input
+        console.log("Editing operation canceled or invalid input.");
+    }
+}
+
+function deleteWateringTime(wateringTimeKey) {
+    // Confirm with the user before proceeding with the deletion
+    const confirmation = confirm("Are you sure you want to delete this watering time?");
+    
+    if (confirmation) {
+        // Get a reference to the specific watering time node in the database
+        const wateringTimeRef = ref(database, `Device02/control/watering_time/${wateringTimeKey}`);
+
+        // Remove the watering time from the database
+        remove(wateringTimeRef);
+
+        // Remove the corresponding UI element (optional)
+        // You can update the displayed information in the UI as per your application's needs.
+        // For example, you may want to remove the deleted watering time from the displayed list.
+
+        // For demonstration purposes, you can log a message
+        console.log(`Watering time ${wateringTimeKey} deleted successfully.`);
+    } else {
+        // Handle the case where the user canceled the deletion
+        console.log("Deletion canceled by the user.");
+    }
+}
+flatpickr("#fertilizingStartTime", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+    });
+
+    flatpickr("#fertilizingEndTime", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+    });
+    // Function to display fertilizing times
+    function displayFertilizingTimes() {
+    const fertilizingTimeRef = ref(database, 'Device02/control/fertilizing_time');
+
+    onValue(fertilizingTimeRef, (snapshot) => {
+        const fertilizingTimesData = snapshot.val();
+
+        const displayContainer = document.getElementById('fertilizingTimesDisplay');
+        displayContainer.innerHTML = '';
+
+        if (fertilizingTimesData) {
+            Object.keys(fertilizingTimesData).forEach((key) => {
+                const startTime = fertilizingTimesData[key].start_time;
+                const endTime = fertilizingTimesData[key].end_time;
+
+                const timeBox = document.createElement('div');
+                timeBox.className = 'fertilizing-time-box'; // Apply additional class for styling
+                timeBox.innerHTML = `<div class="time-row"><strong>Start Time:</strong> ${startTime}</div><div class="time-row"><strong>End Time:</strong> ${endTime}</div><div class="btn-row"><button onclick="editFertilizingTime('${key}')"><i class="fas fa-pencil-alt"></i> Edit</button> <button onclick="deleteFertilizingTime('${key}')"><i class="fas fa-trash-alt"></i> Delete</button></div>`;
+                displayContainer.appendChild(timeBox);
+            });
+        } else {
+            const noDataMessage = document.createElement('div');
+            noDataMessage.textContent = 'No fertilizing times available.';
+            displayContainer.appendChild(noDataMessage);
+        }
+    });
+}
+
+
+// Call the displayFertilizingTimes function to initially load the data
+displayFertilizingTimes();
+
+// Function to save fertilizing time
+function saveFertilizingTime() {
+    const startTime = document.getElementById('fertilizingStartTime').value;
+    const endTime = document.getElementById('fertilizingEndTime').value;
+
+    const fertilizingTimeRef = ref(database, 'Device02/control/fertilizing_time');
+    const newFertilizingTimeRef = push(fertilizingTimeRef, {
+        start_time: startTime,
+        end_time: endTime
+    });
+
+    const displayContainer = document.getElementById('fertilizingTimesDisplay');
+    const timeBox = document.createElement('div');
+    timeBox.innerHTML = `Start Time: ${startTime}, End Time: ${endTime} <button onclick="editFertilizingTime('${newFertilizingTimeRef.key}')">Edit</button> <button onclick="deleteFertilizingTime('${newFertilizingTimeRef.key}')">Delete</button>`;
+    displayContainer.appendChild(timeBox);
+
+    document.getElementById('fertilizingStartTime').value = '';
+    document.getElementById('fertilizingEndTime').value = '';
+    document.getElementById('fertilizingTimePopup').style.display = 'none';
+}
+
+// Function to edit fertilizing time
+function editFertilizingTime(fertilizingTimeKey) {
+    const newStartTime = prompt("Enter new start time:");
+    const newEndTime = prompt("Enter new end time:");
+
+    if (newStartTime !== null && newEndTime !== null) {
+        const fertilizingTimeRef = ref(database, `Device02/control/fertilizing_time/${fertilizingTimeKey}`);
+        update(fertilizingTimeRef, {
+            start_time: newStartTime,
+            end_time: newEndTime
+        });
+
+        console.log(`Fertilizing time ${fertilizingTimeKey} updated successfully.`);
+    } else {
+        console.log("Editing operation canceled or invalid input.");
+    }
+}
+
+// Function to delete fertilizing time
+function deleteFertilizingTime(fertilizingTimeKey) {
+    const confirmation = confirm("Are you sure you want to delete this fertilizing time?");
+    
+    if (confirmation) {
+        const fertilizingTimeRef = ref(database, `Device02/control/fertilizing_time/${fertilizingTimeKey}`);
+        remove(fertilizingTimeRef);
+
+        console.log(`Fertilizing time ${fertilizingTimeKey} deleted successfully.`);
+    } else {
+        console.log("Deletion canceled by the user.");
+    }
+}
+function showFertilizingTimePopup() {
+    const popup = document.getElementById('fertilizingTimePopup');
+    popup.style.display = 'block';
+}
+
+
+
+
+  window.showPopup = showPopup;
+  window.closePopup = closePopup;
+  window.updateThreshold = updateThreshold;
+  window.toggleManualMode =toggleManualMode;
+  window.toggleAutomaticMode =toggleAutomaticMode;
+  window.showWateringTimePopup = showWateringTimePopup;
+  window.saveWateringTime =saveWateringTime;
+  window.editWateringTime=editWateringTime;
+  window.deleteWateringTime=deleteWateringTime;
+  window.displayFertilizingTimes = displayFertilizingTimes;
+  window.saveFertilizingTime =saveFertilizingTime;
+  window.editFertilizingTime=editFertilizingTime;
+  window.deleteFertilizingTime=deleteFertilizingTime;
+  window.showFertilizingTimePopup = showFertilizingTimePopup;
+
+        </script>
+        
+    <!-- <script src="app.js"></script> -->
+</body>
+</html>
